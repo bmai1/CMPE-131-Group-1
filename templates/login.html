@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <form id="login-form" method="post"> 
+        <input id="userid" name="userid" autocomplete="off" placeholder="Username">
+        <br>
+        <input id="password" name="password" type="password" placeholder="Password">
+        <br>
+        <input type="submit" value="Log in">
+    </form>
+    <br>
+    <a href="{{ url_for('registration') }}"><button>Go to registration</button></a>
+    <br>
+    <a href="{{ url_for('index') }}"><button>Return to main page</button></a>
+</body>
