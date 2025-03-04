@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 1</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Secure Online Banking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cover.css') }}">
 </head>
 <body>
-    <div>
-        <a href="{{ url_for('registration') }}"><button>Go to registration</button></a>
-        <br>
-        <a href="{{ url_for('login') }}"><button>Go to login</button></a>
+    <div class="container">
+        <h1>Secure Online Banking</h1>
+        <p>Manage your finances easily and securely from anywhere.<br>
+           Sign up now to deposit, withdraw, and transfer funds.</p>
+        <a href="{{ url_for('registration') }}" class="btn">Get Started</a>
     </div>
+    <footer>
+        CMPE 131 Section 2, Group 1
+    </footer>
 </body>
+</html>
