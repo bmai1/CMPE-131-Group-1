@@ -1,3 +1,5 @@
-Clone this repo: `git clone https://github.com/bmai1/CMPE-131-Group-1.git`.
+Clone this repo: `git clone https://github.com/bmai1/CMPE-131-Group-1.git`
 
-It would be best to make a new branch and make a merge request when making big changes.
+Remember to git pull to update local code before working on stuff
+
+Just push to main and I'll review the commit
