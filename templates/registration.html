@@ -9,6 +9,9 @@
 <body>
     <div class="login-container">
         <h2>Register</h2>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
         <form id="register-form" method="post"> 
             <input class="login-input" id="userid" name="userid" autocomplete="off" placeholder="Username">
             <br>
