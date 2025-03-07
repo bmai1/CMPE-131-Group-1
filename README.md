@@ -9,7 +9,9 @@ Usage:
 python -m venv env
 . env/bin/activate
 pip install -r requirements.txt
-python init.py
 flask run
 ```
+
+Run `python init.py` if creating or updating a database (users.db).
+
 Flask defaults to [127.0.0.1:5000](http://127.0.0.1:5000).
