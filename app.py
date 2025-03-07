@@ -65,6 +65,9 @@ def registration():
     message = None
     if request.method == 'POST':
         username = request.form['userid']
+        email = request.form['email']
+        address1 = request.form['address1']
+        dob = request.form['dob']
         password = request.form['password']
         
         db = get_db()
@@ -75,7 +78,7 @@ def registration():
             message = "Username already taken!"
         else:
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            db.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+            db.execute("INSERT INTO users (username, email, address1, dob, password) VALUES (?, ?, ?, ?, ?)", (username, email, address1, dob, hashed_password))
             db.commit()
             message = "Registration successful! You can now log in."
             return redirect(url_for('login'))

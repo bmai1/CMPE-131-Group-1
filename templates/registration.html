@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 1</title>
+    <title>Register</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='loginregister.css') }}">
 </head>
 <body>
@@ -13,10 +13,20 @@
             <p>{{ message }}</p>
         {% endif %}
         <form id="register-form" method="post"> 
-            <input class="login-input" id="userid" name="userid" autocomplete="off" placeholder="Username">
+            <input class="login-input" id="userid" name="userid" autocomplete="off" placeholder="Username" pattern="^[a-zA-Z0-9]+$" minlength="5" title="Only letters and numbers allowed (no spaces or special characters)" required>
             <br>
-            <input class="login-input" id="password" name="password" autocomplete="off" type="password" placeholder="Password">
+            <input class="login-input" type="email" id="email" name="email" autocomplete="off" placeholder="Email" required>
             <br>
+            <input class="login-input" id="password" name="password" autocomplete="off" type="password" placeholder="Password" minlength="5" required>
+            <br>
+            <div>
+                <input class="login-input" id="address1" style="width: 68%;" name="address1" autocomplete="off" placeholder="Address" required>
+                <input class="login-input" id="zip" style="width: 30%;" name="zip" autocomplete="off" placeholder="ZIP code" required>
+            </div>
+            <div>
+                <label for="dob">Date of Birth:</label>
+                <input class="login-input" style="width: 69%;" type="date" id="dob" name="dob" required>
+            </div>
             <button type="submit" class="login-button">Register</button>
         </form>
         <br>
