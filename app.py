@@ -1,8 +1,9 @@
 import sqlite3
 import bcrypt
-from flask import Flask, render_template, g, request, redirect, url_for
+from flask import Flask, render_template, g, request, redirect, url_for, session
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 app.config['DATABASE'] = 'database/users.db'
 
 def init_db():
@@ -49,6 +50,7 @@ def login():
         user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
 
         if user and bcrypt.checkpw(password.encode('utf-8'), user['password']): 
+            session['username'] = username
             return redirect(url_for('dashboard'))
         else:
             message = "Invalid username or password."
@@ -67,7 +69,12 @@ def registration():
         username = request.form['userid']
         email = request.form['email']
         address1 = request.form['address1']
+        address2 = request.form['address2']
+        city = request.form['city']
+        state = request.form['state']
+        zip = request.form['zip']
         dob = request.form['dob']
+        phone = request.form['phone']
         password = request.form['password']
         
         db = get_db()
@@ -78,7 +85,7 @@ def registration():
             message = "Username already taken!"
         else:
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            db.execute("INSERT INTO users (username, email, address1, dob, password) VALUES (?, ?, ?, ?, ?)", (username, email, address1, dob, hashed_password))
+            db.execute("INSERT INTO users (username, email, address1, address2, city, state, zip, dob, phone, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (username, email, address1, address2, city, state, zip, dob, phone, hashed_password))
             db.commit()
             message = "Registration successful! You can now log in."
             return redirect(url_for('login'))
@@ -91,4 +98,8 @@ def dashboard():
        Route for dashboard.
        Open/close and view user accounts.
     """
-    return render_template('dashboard.html')
+    if 'username' in session:  
+        username = session['username']  
+        return render_template('dashboard.html', username=username)  
+    else:
+        return redirect(url_for('login'))  
