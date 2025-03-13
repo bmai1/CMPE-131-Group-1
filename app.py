@@ -1,9 +1,10 @@
 import sqlite3
 import bcrypt
+import os
 from flask import Flask, render_template, g, request, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = os.environ.get("SECRET_KEY")
 app.config['DATABASE'] = 'database/users.db'
 
 def init_db():
