@@ -1,9 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
 </head>
 <body>
-    <p>WELCOME, {{ username }}.</p>
-    </body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Open New Account</a></li>
+            <li><a href="#">Deposit</a></li>
+            <li><a href="#">Transfer</a></li>
+            <li><a href="#">Withdraw</a></li>
+            <li><a href="#">Account Details</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="container">
+        <p>Welcome, {{ username }}.</p>
+        <br>
+        <div class="row">
+            <div class="col">
+                <div class="content-box">Account Balance: $1,000,000.00</div>
+            </div>
+            <div class="col">
+                <div class="content-box">Div 2</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="content-box">Div 3</div>
+            </div>
+            <div class="col">
+                <div class="content-box">Div 4</div>
+            </div>
+        </div>
+    </div>
+
+</body>
 </html>
