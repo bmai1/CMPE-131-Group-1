@@ -11,7 +11,9 @@ python -m venv env
 pip install -r requirements.txt
 flask run
 ```
+(if venv already created, skip the first and third command)
 
 Run `python init.py` if creating or updating a database (users.db).
+
 
 Flask defaults to [127.0.0.1:5000](http://127.0.0.1:5000).
