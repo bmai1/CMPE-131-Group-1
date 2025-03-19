@@ -8,7 +8,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
-app.config['DATABASE'] = 'database/users.db'
+app.config['DATABASE'] = 'database/database.db'
 
 def init_db():
     with app.app_context():
@@ -96,14 +96,32 @@ def registration():
 
     return render_template('registration.html', message=message)
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     """
        Route for dashboard.
        Open/close and view user accounts.
     """
     if 'username' in session:  
-        username = session['username']  
-        return render_template('dashboard.html', username=username)  
+        
+        username = session['username']
+        db = get_db()
+        accounts = db.execute("SELECT accountname, balance FROM accounts WHERE username = ?", (username,)).fetchall()
+
+        if request.method == 'POST':
+            form_id = request.form.get('form_id')
+            accountname = request.form['accountname']
+
+            if form_id == 'open_account':
+                db.execute("INSERT INTO accounts (username, accountname, balance) VALUES (?, ?, ?)", (username, accountname, 0))
+                db.commit()
+
+            elif form_id == 'close_account':
+                db.execute("DELETE FROM accounts WHERE username = ? AND accountname = ?", (username, accountname))
+                db.commit()
+    
+            return redirect(url_for('dashboard'))
+        
+        return render_template('dashboard.html', username=username, accounts=accounts)  
     else:
         return redirect(url_for('login'))  
