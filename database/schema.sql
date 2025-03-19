@@ -10,3 +10,9 @@ CREATE TABLE users (
     phone VARCHAR(50) NOT NULL,
     password BLOB NOT NULL
 );
+
+CREATE TABLE accounts (
+    username VARCHAR(50) NOT NULL,
+    accountname VARCHAR(50) NOT NULL,
+    balance DECIMAL(10,2) DEFAULT 0 NOT NULL
+);
