@@ -6,3 +6,22 @@
     <title>withdrawal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='loginregister.css') }}">
 </head>
+<body>
+    <div class="account container">
+        <h2>{{ username }}'s Bank Withdrawal</h2>
+        <form id = "withdraw-form" method = "post">
+            <div class="mb-3">
+                <label for="account_number" class="form-label">Account Number:</label>
+                <input type="text" class="form-control" id="account_number" name="account_number" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Withdrawal Amount:</label>
+                <input type="number" class="form-control" id="amount" name="amount" step="0.01" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Withdraw</button>
+        </form>
+    </div>
+</body>
+</html>
