@@ -104,3 +104,18 @@ def dashboard():
         return render_template('dashboard.html', username=username)  
     else:
         return redirect(url_for('login'))  
+
+
+@app.route('/withdraw')
+def withdraw():
+    """
+       Route for withdraw.
+       Withdraw money from user accounts.
+    
+    if 'username' in session:  
+        username = session['username']  
+        return render_template('withdraw.html', username=username)  
+    else:
+        return redirect(url_for('login')) 
+        """
+    return render_template('withdraw.html')
