@@ -47,3 +47,37 @@ footer {
     font-size: 0.9rem;
     color: #ccc;
 }
+.log-button {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 100px; 
+   
+}
+
+.log-button p {
+    font-size: 0.8rem; 
+    margin-bottom: 5px; 
+}
+
+.log-button div {
+    display: flex;
+    justify-content: center;     
+    gap: 5px; 
+    margin-top: 10px; 
+       
+}
+.login-button {
+    display: inline-block;
+    background-color: #fff; 
+    color: #000; 
+    padding: 2px 8px; 
+    font-size: 0.8rem; 
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.login-button:hover {
+    background-color: #ddd; 
+}
