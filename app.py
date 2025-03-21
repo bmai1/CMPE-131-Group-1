@@ -104,3 +104,46 @@ def dashboard():
         return render_template('dashboard.html', username=username)  
     else:
         return redirect(url_for('login'))  
+@app.route('/accountdetails')
+def account_details():
+    """
+    Route for viewing account details.
+    """
+    if 'username' in session:
+        username = session['username']
+        db = get_db()
+        user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+        if user:
+            return render_template('accountdetails.html', user=user)
+    
+    return redirect(url_for('login'))  # Redirect to login if not authenticated
+@app.route('/edit_account', methods=['GET', 'POST'])
+def edit_account():
+    """
+    Route for editing account details.
+    """
+    if 'username' in session:
+        username = session['username']
+        db = get_db()
+        user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+
+        if request.method == 'POST':
+            new_email = request.form.get('email')
+            new_address1 = request.form.get('address1')
+            new_address2 = request.form.get('address2')
+            new_city = request.form.get('city')
+            new_state = request.form.get('state')
+            new_zip = request.form.get('zip')
+            new_phone = request.form.get('phone')
+
+            db.execute("""
+                UPDATE users SET email = ?, address1 = ?, address2 = ?, city = ?, state = ?, zip = ?, phone = ?
+                WHERE username = ?
+            """, (new_email, new_address1, new_address2, new_city, new_state, new_zip, new_phone, username))
+            db.commit()
+
+            return redirect(url_for('account_details'))
+
+        return render_template('editaccount.html', user=user)
+
+    return redirect(url_for('login'))
