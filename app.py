@@ -110,7 +110,7 @@ def dashboard():
     
 @app.route('/deposit')
 def deposit():
-        """
-        Route for Deposit 
-        """
-        return render_template('deposit.html')
+    """
+        Route for deposit. TODO: add image upload
+    """
+    return render_template('deposit.html')

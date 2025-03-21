@@ -3,36 +3,77 @@
     <head>
         <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Deposit </title>
+    <title>Mobile Deposit</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='deposit.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='loginregister.css') }}">
 </head>
 <body>
     <div class="container">
-        <h2>Mobile Deposit</h2>
+        <h2>Deposit</h2>
+        <br>
         <div class="account-info">
-            <h1> To: <strong> CMPE GROUP 1 BANK </strong></h1>
-            <p> <strong> ACCOUNT NUMBER is: </strong><input type="number" class="account-number" placeholder="Enter Account Number"></p>
-            <p> <strong> ACCOUNT NAME is: </strong><input type="text" class="account-name" placeholder="Enter Account Name"> </p>
-            <p> <strong>Available balance as of </strong> 
-                <span class="date-today"><span id="current-date"></span></span>:
-            </p>    
+            <input type="text" class="account-number" placeholder="Username">
+            <input type="text" class="account-name" placeholder="Account name">
         </div>
-            <input type="text" class="amount-input" placeholder="Enter Deposit Amount" >
-            <p>Daily Limit: <strong>$10,000</strong> | 30-Day Limit:<strong>$30,000</strong></p>
+        <input type="text" class="amount-input" placeholder="Deposit amount">
+        <br>
+        <br>
+        <p>Daily Limit: <strong>$10,000</strong> | 30-Day Limit: <strong>$30,000</strong></p>
+        <br>
+        <div id="upload-box">
+            <input type="file" id="file-input" accept="image/*" hidden />
+            <div id="upload-content">
+                <span style="font-size:150px;">⬆</span>
+                <p>Upload Electronic Check</p>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="nav-button">Cancel</button>
+            <button class="login-button">Deposit</button>
+        </div>
     </div>
-        <div class = "buttons">
-            <button class="cancel">Cancel</button>
-            <button class="deposit">Deposit</button>
-        </div>
 
         <script>
-            function updateDate(){
+            function updateDate() {
                 let today = new Date();
                 let formattedDate = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear();
                 document.getElementById("current-date").innerText = formattedDate;
-
             }
-            window.onload =updateDate;
+            window.onload = updateDate;
+           
+            const uploadBox = document.getElementById("upload-box");
+            const fileInput = document.getElementById("file-input");
+
+            uploadBox.addEventListener("click", () => fileInput.click());
+
+            uploadBox.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                uploadBox.classList.add("drag-over");
+            });
+
+            uploadBox.addEventListener("dragleave", () => {
+                uploadBox.classList.remove("drag-over");
+            });
+
+            uploadBox.addEventListener("drop", (e) => {
+                e.preventDefault();
+                uploadBox.classList.remove("drag-over");
+                const file = e.dataTransfer.files[0];
+                if (file) handleFileUpload(file);
+            });
+
+            fileInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (file) handleFileUpload(file);
+            });
+
+            function handleFileUpload(file) {
+                if (!file.type.startsWith("image/")) {
+                alert("Please upload an image file.");
+                return;
+                }
+                alert(`File uploaded: ${file.name}`);
+            }
 
         </script>
     </body>
