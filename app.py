@@ -108,11 +108,9 @@ def dashboard():
     else:
         return redirect(url_for('login'))  
     
-    @app.route('/deposit')
-    def deposit():
+@app.route('/deposit')
+def deposit():
         """
         Route for Deposit 
         """
-        return
-    render_template('deposit.html')
-
+        return render_template('deposit.html')
