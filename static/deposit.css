@@ -32,8 +32,8 @@ h2{
     font: 28px;
     text-align: center;
     width: 100%;
-    border:0cap;
-    outline:0in;
+    border:none;
+    outline:none;
     background: none;
 }
 
