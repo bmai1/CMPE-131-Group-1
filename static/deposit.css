@@ -1,10 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
-    font-family: Ariel,sans-serif;
+    font-family: Arial,sans-serif;
     background:linear-gradient(to bottom, #a3c2f2, white);
     display:flex;
     justify-content: center;
     align-items:center;
-    height: 150vh;
+    height: 100vh;
+    margin: 0;
 }
 
 .container{
@@ -13,12 +20,12 @@ body{
     max-width:400px;
     padding:20px;
     border-radius:10px;
-    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
 h2{
-    color: #943;
+    color: #333;
 }
 
 .account-info {
@@ -28,16 +35,33 @@ h2{
     text-align: left;
 }
 
-.amount-input{
-    font: 28px;
-    text-align: center;
-    width: 100%;
-    border:none;
-    outline:none;
-    background: none;
+input{
+    width:100%;
+    padding:8px;
+    margin:5px;
+    border:2px solid #ccc;
+    border-radius: 5px;
 }
 
-.button{
+.date-today {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    font-style: italic;
+    font-weight:bold;
+    font-size: 14px;
+}
+.amount-input{
+    font-size: 28px;
+    text-align: center;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+    padding:5px;
+}
+
+.buttons{
     display:flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -50,14 +74,17 @@ button {
     border-radius: 5px;
     cursor:pointer;
     font-size: 16px;
+    color: white;
+    margin: 0 5px;
 }
 
 .cancel{
-    background: #a82509
+    background: #d9534f;
 }
 
+.deposit:hover {
+    background-color: #d9534f;
+}
 .deposit{
-    background: #46DC29;
-    color: white;
-    cursor: not-allowed;
+    background: #5cb85c;
 }

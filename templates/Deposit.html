@@ -10,16 +10,31 @@
     <div class="container">
         <h2>Mobile Deposit</h2>
         <div class="account-info">
-            <p> To: <bold><XYZ Bank Account number= </bold></p>
-            <p>Available balance as of MM/DD/YYYY: <bold>Amount </bold></p>    
+            <h3> To: <strong> CMPE GRP 1 Bank </strong></h3>
+            <p> <strong> ACCOUNT NUMBER is: </strong><input type="number" class="account-number" placeholder="Enter Account Number"></p>
+            <p> <strong> ACCOUNT NAME is: </strong><input type="text" class="account-name" placeholder="Enter Account Name"> </p>
+            <p> <strong>Available balance as of </strong> 
+                <span class="date-today"><span id="current-date"></span></span>:
+            </p>    
         </div>
-            <input type="text" class="amount-input" value ="$0.00" readonly>
-            <p>Daily Limit: <bold>$10,000</bold> | 30-Day Limit:<bold>$30,000</bold></p>
+            <input type="text" class="amount-input" placeholder="Enter Deposit Amount" >
+            <p>Daily Limit: <strong>$10,000</strong> | 30-Day Limit:<strong>$30,000</strong></p>
     </div>
         <div class = "buttons">
             <button class="cancel">Cancel</button>
-            <button class="Deposit">Deposit</button>
+            <button class="deposit">Deposit</button>
         </div>
+
+        <script>
+            function updateDate(){
+                let today = new Date();
+                let formattedDate = (today.getMonth()+1) + '/' + today.getDate() + '/' + today.getFullYear();
+                document.getElementById("current-date").innerText = formattedDate;
+
+            }
+            window.onload =updateDate;
+
+        </script>
     </body>
     
 </html>
