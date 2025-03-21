@@ -125,7 +125,8 @@ def dashboard():
         return render_template('dashboard.html', username=username, accounts=accounts)  
     else:
         return redirect(url_for('login'))  
-@app.route('/accountdetails')
+    
+@app.route('/account_details')
 def account_details():
     """
     Route for viewing account details.
@@ -138,6 +139,7 @@ def account_details():
             return render_template('accountdetails.html', user=user)
     
     return redirect(url_for('login'))  # Redirect to login if not authenticated
+
 @app.route('/edit_account', methods=['GET', 'POST'])
 def edit_account():
     """
