@@ -1,11 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
 </head>
 <body>
-    <p>WELCOME, {{ username }}.</p>
-    <br>
-            <a href="{{ url_for('withdraw') }}"><button class="nav-button">Withdraw</button></a>
-    </body>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Deposit</a></li>
+            <li><a href="#">Transfer</a></li>
+            <li><a href="#">Withdraw</a></li>
+            <li><a href="#">Account Details</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="content-box">
+                    <h3>Select an account</h3>
+                    <select id="accountDropdown" onchange="updateBalance()">
+                        <option value="" disabled selected>Select an account</option>
+                        {% for account in accounts %}
+                            <option value="{{ account.balance }}">{{ account.accountname }}</option>
+                        {% endfor %}
+                    </select>
+                    <div style="padding-top:40px;">
+                        <p>Account Balance:</p>
+                        <p id="accountBalance" class="account-balance">$0.00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="content-box">
+                    <h3>Open a new account</h3>
+                    <form method="post"> 
+                        <input type="hidden" name="form_id" value="open_account">
+                        <input id="accountname" name="accountname" autocomplete="off" placeholder="Account name" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                    <h3>Close an existing account</h3>
+                    <form method="post"> 
+                        <input type="hidden" name="form_id" value="close_account">
+                        <input id="accountname" name="accountname" autocomplete="off" placeholder="Account name" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="content-box">
+                    <h3>Account history</h3>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="content-box">
+                    <h3>Find ATMs for cash withdrawal near you.</h3>
+                    <iframe
+                    width="600"
+                    height="450"
+                    style="border:0"
+                    loading="lazy"
+                    allowfullscreen
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed/v1/place?key=API_KEY
+                        &q=placeholder">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateBalance() {
+            var dropdown = document.getElementById("accountDropdown");
+            var balanceDisplay = document.getElementById("accountBalance");
+            var selectedBalance = dropdown.options[dropdown.selectedIndex].value;
+            balanceDisplay.textContent = "$" + parseFloat(selectedBalance).toFixed(2);
+        }
+    </script>
+
+</body>
 </html>

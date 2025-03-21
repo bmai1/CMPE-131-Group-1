@@ -8,6 +8,7 @@ body {
     height: 100vh;
     text-align: center;
     font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
 .container {
@@ -46,4 +47,24 @@ footer {
     bottom: 20px;
     font-size: 0.9rem;
     color: #ccc;
+}
+.log-button {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 100px; 
+   
+}
+
+.log-button p {
+    font-size: 0.8rem; 
+    margin-bottom: 5px; 
+}
+
+.log-button div {
+    display: flex;
+    justify-content: center;     
+    gap: 5px; 
+    margin-top: 10px; 
+       
 }
