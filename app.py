@@ -170,3 +170,11 @@ def edit_account():
         return render_template('editaccount.html', user=user)
 
     return redirect(url_for('login'))
+
+    
+@app.route('/deposit')
+def deposit():
+    """
+        Route for deposit. TODO: add image upload
+    """
+    return render_template('deposit.html')
