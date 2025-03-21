@@ -90,11 +90,12 @@
                     <input class="login-input" style="width: 69%;" type="tel" id="phone" name="phone" pattern="{3}-{3}-{4}" placeholder="XXX-XXX-XXXX" maxlength="12" required>
                 </div>
             </div>
-            <button type="submit" class="login-button">Register</button>
+            <button type="submit" class="login-button">Create new account</button>
         </form>
         <div class="button-row">
             
-            <div>                
+            <div> 
+                <a href="{{ url_for('login') }}"><button class="nav-button">Log into existing account</button></a>               
                 <a href="{{ url_for('index') }}"><button class="nav-button">Home</button></a>
             </div>
         </div>
