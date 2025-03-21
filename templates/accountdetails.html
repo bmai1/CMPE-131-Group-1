@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="#">Deposit (Placeholder)</a></li>
+            <li><a href="#">Transfer (Placeholder)</a></li>
+            <li><a href="#">Withdraw (Placeholder)</a></li>
+            <li><a href="#">Logout (Placeholder)</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Account Balance Box (Left) -->
+            <div class="col">
+                <div class="content-box account-balance-box">
+                    <h3>Account Balance</h3>
+                    <p id="accountBalance" class="account-balance">$0.00</p>
+                </div>
+            </div>
+
+            <!-- Account Details Box (Right) -->
+            <div class="col">
+                <div class="content-box">
+                    <h3>Account Details</h3>
+                    
+                    <div class="account-info">
+                        <p><strong>Username:</strong> {{ user.username }}</p>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Address:</strong> {{ user.address1 }} {{ user.address2 }}</p>
+                        <p><strong>City:</strong> {{ user.city }}</p>
+                        <p><strong>State:</strong> {{ user.state }}</p>
+                        <p><strong>ZIP Code:</strong> {{ user.zip }}</p>
+                        <p><strong>Date of Birth:</strong> {{ user.dob }}</p>
+                        <p><strong>Phone:</strong> {{ user.phone }}</p>
+                    </div>
+
+                    <!-- Edit Account Button -->
+                    <a href="{{ url_for('edit_account') }}">
+                        <button class="nav-button">Edit Account</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
