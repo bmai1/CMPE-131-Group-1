@@ -107,3 +107,11 @@ def dashboard():
         return render_template('dashboard.html', username=username)  
     else:
         return redirect(url_for('login'))  
+    
+    @app.route('/Deposit')
+    def deposit():
+        """
+        Route for Deposit 
+        """
+        return
+    render_template('deposit.html')
