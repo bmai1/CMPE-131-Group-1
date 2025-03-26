@@ -132,26 +132,42 @@ def withdraw():
     """
        Route for withdraw.
        Withdraw money from user accounts.
+
+       ReLogin to Access Withdrawal
+       Use a dropdown to access User Accounts
+       Withdraw using an Integer Input
     
-    if 'username' in session:  
-        username = session['username']  
-        return render_template('withdraw.html', username=username)  
-    else:
-        return redirect(url_for('login')) 
     """
+    if 'username' not in session:
+        return redirect(url_for('login'))  # Redirect if not logged in
+
     message = None
+    db = get_db()
+    username = session['username']
+
+    # Fetch user accounts
+    accounts = db.execute("SELECT * FROM accounts WHERE user_id = (SELECT id FROM users WHERE username = ?)", 
+                          (username,)).fetchall()
+
     if request.method == 'POST':
-        username = request.form['userid']
-        password = request.form['password']
-        
-        db = get_db()
+        password = request.form.get("password")  # Secondary verification
+        account_id = request.form.get("account_id")
+        amount = int(request.form.get("amount"))
+
+        # Verify the password again
         user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
-
-        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']): 
-            session['username'] = username
-            return redirect(url_for('dashboard'))
+        if not user or not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+            message = "Incorrect password. Withdrawal denied."
         else:
-            message = "Invalid username or password."
+            # Get account balance
+            account = db.execute("SELECT balance FROM accounts WHERE id = ?", (account_id,)).fetchone()
 
-    
-    return render_template('withdraw.html', message=message)
+            if account and account['balance'] >= amount:
+                # Process withdrawal
+                db.execute("UPDATE accounts SET balance = balance - ? WHERE id = ?", (amount, account_id))
+                db.commit()
+                message = f"Successfully withdrew ${amount} from account {account_id}."
+            else:
+                message = "Insufficient balance or invalid account selection."
+
+    return render_template('withdraw.html', message=message, accounts=accounts)
