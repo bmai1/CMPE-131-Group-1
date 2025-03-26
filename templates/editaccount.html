@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="#">Deposit (Placeholder)</a></li>
+            <li><a href="#">Transfer (Placeholder)</a></li>
+            <li><a href="#">Withdraw (Placeholder)</a></li>
+            <li><a href="#">Logout (Placeholder)</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Account Balance Box (Left) -->
+            <div class="col">
+                <div class="content-box account-balance-box">
+                    <h3>Account Balance</h3>
+                    <h1 class="account-balance-placeholder">$0.00</h1>
+                </div>
+            </div>
+
+            <!-- Edit Account Box (Right) -->
+            <div class="col">
+                <div class="content-box">
+                    <h3>Edit Account Details</h3>
+
+                    <form method="post">
+                        <input class="login-input" type="email" name="email" value="{{ user.email }}" required placeholder="Email">
+                        <br>
+                        <input class="login-input" type="text" name="address1" value="{{ user.address1 }}" placeholder="Address 1" required>
+                        <br>
+                        <input class="login-input" type="text" name="address2" value="{{ user.address2 }}" placeholder="Address 2">
+                        <br>
+                        <input class="login-input" type="text" name="city" value="{{ user.city }}" placeholder="City" required>
+                        <br>
+                        <input class="login-input" type="text" name="state" value="{{ user.state }}" placeholder="State" required>
+                        <br>
+                        <input class="login-input" type="text" name="zip" value="{{ user.zip }}" placeholder="ZIP Code" required>
+                        <br>
+                        <input class="login-input" type="tel" name="phone" value="{{ user.phone }}" placeholder="Phone" required>
+                        <br>
+                        <button type="submit" class="nav-button">Save Changes</button>
+                    </form>
+
+                    <a href="{{ url_for('account_details') }}">
+                        <button class="nav-button">Back to Account Details</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
