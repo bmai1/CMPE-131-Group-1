@@ -4,24 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>withdrawal</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='loginregister.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+    <style>
+        button {
+            width: 100%;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkgreen;
+        }
+        #withdrawal-section {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>{{ username }}'s Bank Withdrawal</h2>
-        <form id = "withdraw-form" method = "post">
-            <div class="mb-3">
-                <label for="account_number" class="form-label">Account Number:</label>
-                <input type="number" class="form-control" id="account_number" name="account_number" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="amount" class="form-label">Withdrawal Amount:</label>
-                <input type="number" class="form-control" id="amount" name="amount" step="0.01" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Withdraw</button>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Deposit</a></li>
+            <li><a href="#">Transfer</a></li>
+            <li><a href="#">Withdraw</a></li>
+            <li><a href="#">Account Details</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="content-box" id="login-section">
+        <h2>Login</h2>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <form id="login-form" method="post">
+            <input class="login-input" id="userid" name="userid" autocomplete="off" placeholder="Username">
+            <br>
+            <input class="login-input" id="password" name="password" autocomplete="off" type="password" placeholder="Password">
+            <br>
+            <button type="submit" class="login-button">Log in</button>
         </form>
     </div>
+    <div class="content-box" id="withdrawal-section">
+        <h2>Bank Withdrawal</h2>
+        <h3>Select Account</h3>
+        <form action ="/submit" method="post">
+            <label for="dropdown">Select an Account:</label>
+            <select id="dropdown" name ="accounts">
+                {% for accounts %}
+                    <option value = "{{ account.id }}">{{ accounts.name }}</option>
+                {% endfor %}
+            </select> 
+        </form>
+        <form method="post"> 
+            <input type="hidden" name="form_id" value="open_account">
+            <input id="accountname" name="accountname" autocomplete="off" placeholder="Account name" required>
+            <button type="submit">Submit</button>
+        </form>
+        <h3>Withdraw Ammount:</h3>
+        <form method="post"> 
+            <input type="hidden" name="form_id" value="withdraw_amount">
+            <input id="wdramount" name="Amount" autocomplete="off" placeholder="Enter Amount" min= "1" required>
+            <button onclick = "processWithdrawal()">Withdraw</button>
+        </form>
+    </div>
+
+    <script>
+        function verifyLogin() {
+        }
+    </script>
 </body>
 </html>

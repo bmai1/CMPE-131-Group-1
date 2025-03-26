@@ -139,4 +139,19 @@ def withdraw():
     else:
         return redirect(url_for('login')) 
     """
-    return render_template('withdraw.html')
+    message = None
+    if request.method == 'POST':
+        username = request.form['userid']
+        password = request.form['password']
+        
+        db = get_db()
+        user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']): 
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+        else:
+            message = "Invalid username or password."
+
+    
+    return render_template('withdraw.html', message=message)
