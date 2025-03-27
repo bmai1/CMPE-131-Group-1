@@ -33,49 +33,49 @@
         <ul>
             <li><a href="{{ url_for('deposit') }}">Deposit</a></li>
             <li><a href="#">Transfer</a></li>
-            <li><a href="{{ url_for('withdraw') }}">Withdraw</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url_for('account_details') }}">Account Details</a></li>
             <li><a href="#">Logout</a></li>
         </ul>
     </nav>
     
     <!-- WITHDRAWAL SECTION -->
-    <div class="content-box">
-        <h2>Bank Withdrawal</h2>
+    <div class="container">
+        <div class="content-box">
+            <h2>Bank Withdrawal</h2>
 
-        {% if message %}
-            <p class="{{ 'success-message' if 'Successfully' in message else 'error-message' }}">
-                {{ message }}
-            </p>
-        {% endif %}
+            {% if message %}
+                <p class="{{ 'success-message' if 'Successfully' in message else 'error-message' }}">
+                    {{ message }}
+                </p>
+            {% endif %}
 
-        <form method="post" onsubmit="return validateWithdrawal()">
-            <!-- CSRF Token (Uncomment if Flask-WTF is used) -->
-            <!-- {{ csrf_token() }} -->
+            <form method="post" onsubmit="return validateWithdrawal()">
+                <!-- CSRF Token (Uncomment if Flask-WTF is used) -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">  <!-- Hidden CSRF Token -->
 
-            <label for="account_id">Select Account:</label>
-            <select id="account_id" name="account_id" required onchange="updateBalance()">
-                <option value="" disabled selected>Select an Account</option>
-                {% for account in accounts %}
-                    <option value="{{ account.id }}" data-balance="{{ account.balance }}">
-                        {{ account.name }} - ${{ account.balance }}
-                    </option>
-                {% endfor %}
-            </select> 
+                <label for="account_id">Select Account:</label>
+                <select id="account_id" name="account_id" required onchange="updateBalance()">
+                    <option value="" disabled selected>Select an Account</option>
+                    {% for account in accounts %}
+                        <option value="{{ account.id }}" data-balance="{{ account.balance }}">
+                            {{ account.name }} - ${{ account.balance }}
+                        </option>
+                    {% endfor %}
+                </select> 
 
-            <p>Available Balance: <strong id="balance-display">Select an account</strong></p>
+                <p>Available Balance: <strong id="balance-display">Select an account</strong></p>
 
-            <label for="amount">Withdraw Amount:</label>
-            <input id="amount" name="amount" type="number" placeholder="Enter Amount" min="1" required>
+                <label for="amount">Withdraw Amount:</label>
+                <input id="amount" name="amount" type="number" placeholder="Enter Amount" min="1" required>
 
-            <label for="password">Re-enter Password:</label>
-            <input id="password" name="password" type="password" placeholder="Enter Password" required maxlength="20">
+                <label for="password">Re-enter Password:</label>
+                <input id="password" name="password" type="password" placeholder="Enter Password" required maxlength="20">
 
-            <button type="submit" class="withdraw-button">Withdraw</button>
-        </form>
-
+                <button type="submit" class="withdraw-button">Withdraw</button>
+            </form>
+        </div>
     </div>
-
     <script>
         function updateBalance() {
             const accountSelect = document.getElementById("account_id");
@@ -107,5 +107,6 @@
             return confirm("Are you sure you want to proceed with the withdrawal?");
         }
     </script>
+
 </body>
 </html>

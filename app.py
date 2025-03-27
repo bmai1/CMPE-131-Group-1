@@ -9,6 +9,10 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['DATABASE'] = 'database/database.db'
+from flask_wtf.csrf import CSRFProtect
+
+csrf = CSRFProtect(app)
+
 
 def init_db():
     with app.app_context():

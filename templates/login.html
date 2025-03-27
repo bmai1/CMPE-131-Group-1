@@ -13,6 +13,7 @@
             <p>{{ message }}</p>
         {% endif %}
         <form id="login-form" method="post"> 
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">  <!-- Hidden CSRF Token -->
             <input class="login-input" id="userid" name="userid" autocomplete="off" placeholder="Username">
             <br>
             <input class="login-input" id="password" name="password" autocomplete="off" type="password" placeholder="Password">

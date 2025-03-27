@@ -39,12 +39,14 @@
                 <div class="content-box">
                     <h3>Open a new account</h3>
                     <form method="post"> 
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">  <!-- Hidden CSRF Token -->
                         <input type="hidden" name="form_id" value="open_account">
                         <input id="accountname" name="accountname" autocomplete="off" placeholder="Account name" required>
                         <button type="submit">Submit</button>
                     </form>
                     <h3>Close an existing account</h3>
                     <form method="post"> 
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">  <!-- Hidden CSRF Token -->
                         <input type="hidden" name="form_id" value="close_account">
                         <input id="accountname" name="accountname" autocomplete="off" placeholder="Account name" required>
                         <button type="submit">Submit</button>
