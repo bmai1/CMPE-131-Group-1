@@ -1,1 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bank Account Transfer</h1>
+        <form id="transfer-form">
+            <label for="from-account">From Account:</label>
+            <input type="text" id="from-account" name="from-account" placeholder="Enter your account number" required>
 
+            <label for="to-account">To Account:</label>
+            <input type="text" id="to-account" name="to-account" placeholder="Enter recipient's account number" required>
+
+            <label for="amount">Amount to Transfer:</label>
+            <input type="number" id="amount" name="amount" placeholder="Amount to transfer" required>
+
+            <button type="button" onclick="validateTransfer()">Transfer</button>
+            <p id="error-message"></p>
+        </form>
+    </div>
+
+</body>
+</html>
