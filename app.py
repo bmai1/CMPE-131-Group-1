@@ -127,50 +127,53 @@ def dashboard():
         return redirect(url_for('login'))  
 
 
-@app.route('/withdraw')
+@app.route('/withdraw', methods=['GET', 'POST'])
 def withdraw():
-    """
-       Route for withdraw.
-       Withdraw money from user accounts.
-
-       ReLogin to Access Withdrawal
-       Use a dropdown to access User Accounts
-       Withdraw using an Integer Input
-    
-    """
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Redirect if not logged in
-
+    """Handles withdrawals securely, consistent with dashboard and account details."""
     message = None
-    db = get_db()
-    username = session['username']
+    if 'username' in session:
+        username = session['username']
+        db = get_db()
+        accounts = db.execute("SELECT accountname, balance FROM accounts WHERE username = ?", (username,)).fetchall()
 
-    # Fetch user accounts
-    accounts = db.execute("SELECT * FROM accounts WHERE user_id = (SELECT id FROM users WHERE username = ?)", 
-                          (username,)).fetchall()
+        if request.method == 'POST':
+            password = request.form.get("password")  
+            accountname = request.form.get("accountname")
+            balance = request.form.get("balance")
 
-    if request.method == 'POST':
-        password = request.form.get("password")  # Secondary verification
-        account_id = request.form.get("account_id")
-        amount = int(request.form.get("amount"))
-
-        # Verify the password again
-        user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
-        if not user or not bcrypt.checkpw(password.encode('utf-8'), user['password']):
-            message = "Incorrect password. Withdrawal denied."
-        else:
-            # Get account balance
-            account = db.execute("SELECT balance FROM accounts WHERE id = ?", (account_id,)).fetchone()
-
-            if account and account['balance'] >= amount:
-                # Process withdrawal
-                db.execute("UPDATE accounts SET balance = balance - ? WHERE id = ?", (amount, account_id))
-                db.commit()
-                message = f"Successfully withdrew ${amount} from account {account_id}."
+            # Validate input
+            if not balance or not balance.strip().isdigit() or int(balance) <= 0:
+                message = "Invalid withdrawal amount."
             else:
-                message = "Insufficient balance or invalid account selection."
+                balance = int(balance)
 
-    return render_template('withdraw.html', message=message, accounts=accounts)
+                # Fetch account balance and user password
+                account = db.execute("""
+                    SELECT a.balance, u.password
+                    FROM accounts a
+                    JOIN users u ON a.username = u.username
+                    WHERE a.accountname = ? AND u.username = ?
+                """, (accountname, username)).fetchone()
+
+                if not account:
+                    message = "Invalid account selection."
+                elif not bcrypt.checkpw(password.encode('utf-8'), account['password']):
+                    message = "Incorrect password. Withdrawal denied."
+                elif account['balance'] < balance:
+                    message = "Insufficient balance."
+                else:
+                    # Process withdrawal
+                    db.execute("UPDATE accounts SET balance = balance - ? WHERE accountname = ? AND username = ?", 
+                            (balance, accountname, username))
+                    db.commit()
+                    message = f"Successfully withdrew ${balance} from {accountname}."
+
+        return render_template('withdraw.html', username=username, message=message, accounts=accounts)
+    else:
+        return redirect(url_for('dashboard'))  
+
+    
+
     
 @app.route('/account_details')
 def account_details():
