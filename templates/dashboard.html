@@ -10,11 +10,12 @@
 
     <nav class="navbar">
         <ul>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url_for('deposit') }}">Deposit</a></li>
-            <li><a href="#">Transfer</a></li>
-            <li><a href="#">Withdraw</a></li>
+            <li><a href="{{ url_for('transfer') }}">Transfer</a></li>
+            <li><a href="{{ url_for('withdraw') }}">Withdraw</a></li>
             <li><a href="{{ url_for('account_details') }}">Account Details</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="{{ url_for('index') }}">Logout</a></li>
         </ul>
     </nav>
 
@@ -22,7 +23,6 @@
         <div class="row">
             <div class="col">
                 <div class="content-box">
-                    <h3>Select an account</h3>
                     <select id="accountDropdown" onchange="updateBalance()">
                         <option value="" disabled selected>Select an account</option>
                         {% for account in accounts %}
@@ -37,7 +37,15 @@
             </div>
             <div class="col">
                 <div class="content-box">
-                    <h3>Open a new account</h3>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="content-box">
+                    <h3 style="margin-top:75px;">Open a new account</h3>
                     <form method="post"> 
                         <input type="hidden" name="form_id" value="open_account">
                         <input id="accountname" name="accountname" autocomplete="off" placeholder="Account name" required>
@@ -51,25 +59,11 @@
                     </form>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="content-box">
-                    <h3>Account history</h3>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                </div>
-            </div>
             <div class="col">
                 <div class="content-box">
                     <h3>Find ATMs for cash withdrawal near you.</h3>
-                    <iframe
+                    <a href="https://www.google.com/maps/search/atms+near+sjsu/@37.3346272,-121.8823242,16z?entry=s&sa=X" target="_blank"><img src="{{ url_for('static', filename='images/map.png') }}" style="height:250px;"></a>
+                    <!-- <iframe
                     width="600"
                     height="450"
                     style="border:0"
@@ -78,11 +72,13 @@
                     referrerpolicy="no-referrer-when-downgrade"
                     src="https://www.google.com/maps/embed/v1/place?key=API_KEY
                         &q=placeholder">
-                    </iframe>
+                    </iframe> -->
                 </div>
             </div>
         </div>
     </div>
+    <br>
+    <br>
     
     <script>
         function updateBalance() {

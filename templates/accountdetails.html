@@ -8,29 +8,20 @@
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <ul>
             <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-            <li><a href="#">Deposit (Placeholder)</a></li>
-            <li><a href="#">Transfer (Placeholder)</a></li>
-            <li><a href="#">Withdraw (Placeholder)</a></li>
-            <li><a href="#">Logout (Placeholder)</a></li>
+            <li><a href="{{ url_for('deposit') }}">Deposit</a></li>
+            <li><a href="{{ url_for('transfer') }}">Transfer</a></li>
+            <li><a href="{{ url_for('withdraw') }}">Withdraw</a></li>
+            <li><a href="{{ url_for('account_details') }}">Account Details</a></li>
+            <li><a href="{{ url_for('index') }}">Logout</a></li>
         </ul>
     </nav>
 
-    <!-- Main Content -->
     <div class="container">
         <div class="row">
-            <!-- Account Balance Box (Left) -->
-            <div class="col">
-                <div class="content-box account-balance-box">
-                    <h3>Account Balance</h3>
-                    <p id="accountBalance" class="account-balance">$0.00</p>
-                </div>
-            </div>
 
-            <!-- Account Details Box (Right) -->
             <div class="col">
                 <div class="content-box">
                     <h3>Account Details</h3>
@@ -45,11 +36,21 @@
                         <p><strong>Date of Birth:</strong> {{ user.dob }}</p>
                         <p><strong>Phone:</strong> {{ user.phone }}</p>
                     </div>
-
-                    <!-- Edit Account Button -->
                     <a href="{{ url_for('edit_account') }}">
                         <button class="nav-button">Edit Account</button>
                     </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="content-box">
+                    <h3>Account history</h3>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <p>yyyy-MM-dd HH:mm:ss - description</p>
                 </div>
             </div>
         </div>

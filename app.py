@@ -4,11 +4,13 @@ import os
 from flask import Flask, render_template, g, request, redirect, url_for, session
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['DATABASE'] = 'database/database.db'
+
 
 def init_db():
     with app.app_context():
@@ -172,9 +174,82 @@ def edit_account():
     return redirect(url_for('login'))
 
     
-@app.route('/deposit')
+@app.route('/deposit',  methods=['GET', 'POST'])
 def deposit():
     """
-        Route for deposit. TODO: add image upload
+        Route for deposit.
     """
+    if 'username' in session:
+        username = session['username']
+        db = get_db()
+
+        if request.method == 'POST':
+            accountname = request.form.get('accountname')
+            depositamount = float(request.form.get('depositamount'))
+            balance = db.execute("SELECT balance FROM accounts WHERE username = ? AND accountname = ?", (username, accountname)).fetchone()[0]
+
+            if depositamount > 0:
+                db.execute("UPDATE accounts SET balance = ? WHERE username = ? AND accountname = ?", (balance + depositamount, username, accountname))
+                db.commit()
+            
     return render_template('deposit.html')
+
+
+@app.route('/transfer')
+def transfer():
+    return render_template('transfer.html')
+
+@app.route('/withdraw', methods=['GET', 'POST'])
+def withdraw():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    username = session['username']
+    db = get_db()
+
+    # Fetch accounts associated with the user
+    accounts = db.execute("SELECT accountname, balance FROM accounts WHERE username = ?", (username,)).fetchall()
+    message = None
+
+    if request.method == 'POST':
+        accountname = request.form.get("account_id")  # Match the form field name
+        password = request.form.get("password")
+        amount_str = request.form.get("amount")
+
+        if not accountname or not password or not amount_str:
+            message = "Please provide all required fields."
+        else:
+            try:
+                amount = float(amount_str)
+                if amount <= 0:
+                    message = "Invalid withdrawal amount."
+                else:
+                    # Fetch user's hashed password from users table
+                    user = db.execute("SELECT password FROM users WHERE username = ?", (username,)).fetchone()
+
+                    if not user:
+                        message = "User not found."
+                    elif not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+                        message = "Incorrect password. Withdrawal denied."
+                    else:
+                        # Fetch the account balance
+                        account = db.execute("SELECT balance FROM accounts WHERE username = ? AND accountname = ?", 
+                                             (username, accountname)).fetchone()
+
+                        if not account:
+                            message = "Invalid account selection."
+                        elif account['balance'] < amount:
+                            message = "Insufficient balance."
+                        else:
+                            # Process withdrawal
+                            db.execute("UPDATE accounts SET balance = balance - ? WHERE username = ? AND accountname = ?", 
+                                       (amount, username, accountname))
+                            db.commit()
+
+                            message = f"Successfully withdrew ${amount:.2f} from {accountname}."
+                            accounts = db.execute("SELECT accountname, balance FROM accounts WHERE username = ?", (username,)).fetchall()
+
+            except ValueError:
+                message = "Invalid amount. Please enter a valid number."
+
+    return render_template('withdraw.html', username=username, message=message, accounts=accounts)

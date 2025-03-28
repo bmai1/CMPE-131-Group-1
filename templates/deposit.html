@@ -8,29 +8,38 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/deposit.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/loginregister.css') }}">
     </head>
-    <body>
+    <body style="display:block;">
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('deposit') }}">Deposit</a></li>
+                <li><a href="{{ url_for('transfer') }}">Transfer</a></li>
+                <li><a href="{{ url_for('withdraw') }}">Withdraw</a></li>
+                <li><a href="{{ url_for('account_details') }}">Account Details</a></li>
+                <li><a href="{{ url_for('index') }}">Logout</a></li>
+            </ul>
+        </nav>
         <div class="container">
             <h2>Deposit</h2>
             <br>
             <div class="account-info">
-                <input type="text" class="account-number" placeholder="Username">
-                <input type="text" class="account-name" placeholder="Account name">
-            </div>
-            <input type="text" class="amount-input" placeholder="Deposit amount">
-            <br>
-            <br>
-            <p>Daily Limit: <strong>$10,000</strong> | 30-Day Limit: <strong>$30,000</strong></p>
-            <br>
-            <div id="upload-box">
-                <input type="file" id="file-input" accept="image/*" hidden />
-                <div id="upload-content">
-                    <span style="font-size:150px;">⬆</span>
-                    <p>Upload Electronic Check</p>
-                </div>
-            </div>
-            <div class="buttons">
-                <button class="nav-button">Dashboard</button>
-                <button class="login-button">Deposit</button>
+                <form method="post"> 
+                    <input type="text" name="username" autocomplete="off" placeholder="Username" required>
+                    <input type="text" name="accountname" autocomplete="off" placeholder="Account name" required>
+                    <input type="number" name="depositamount" placeholder="Deposit amount" required>
+                    <br>
+                    <br>
+                    <div id="upload-box">
+                        <input type="file" id="file-input" accept="image/*" hidden />
+                        <div id="upload-content">
+                            <span style="font-size:150px;">⬆</span>
+                            <p>Upload Electronic Check</p>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button type="submit" class="login-button">Deposit</button>
+                    </div>
+                </form>
             </div>
         </div>
         <script src="{{ url_for('static', filename='scripts/deposit.js') }}"></script>

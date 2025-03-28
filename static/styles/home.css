@@ -46,7 +46,7 @@ footer {
     position: absolute;
     bottom: 20px;
     font-size: 0.9rem;
-    color: #ccc;
+    color: #111111;
 }
 .log-button {
     display: flex;
