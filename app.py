@@ -258,7 +258,110 @@ def withdraw():
 
     return render_template('withdraw.html', username=username, message=message, accounts=accounts)
 
-@app.route('/admin')
+#admin page 
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
     """Route for admin dashboard."""    
     return render_template('admin.html')
+
+#user link from admin page 
+@app.route('/admin/users', methods=['GET', 'POST'])
+def admin_users():
+    """Route to display the user management table."""
+    db = get_db()
+    users = db.execute("SELECT * FROM users").fetchall()
+    return render_template('adminuser.html', users=users)
+
+#deleting user 
+@app.route('/admin/delete_user/<username>', methods=['GET', 'POST'])
+def admin_delete_user(username):
+    """Handles deleting a user by the admin (using direct message variable - limited)."""
+    
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('login')) 
+
+    
+    if username == 'admin':
+       return redirect(url_for('admin_users')) 
+
+    db = get_db()
+    message = None 
+
+    try:
+        # Check if user exists before deleting
+        user = db.execute("SELECT username FROM users WHERE username = ?", (username,)).fetchone()
+        if not user:
+            return redirect(url_for('admin_users')) 
+
+        db.execute("DELETE FROM users WHERE username = ?", (username,))
+        db.execute("DELETE FROM accounts WHERE username = ?", (username,))
+        db.commit()
+        
+    except sqlite3.Error as e:
+        db.rollback()
+        print(f"Database error deleting user {username}: {e}") 
+       
+    except Exception as e:
+        db.rollback()
+        print(f"An error occurred deleting user {username}: {e}") 
+        
+    return redirect(url_for('admin_users'))
+
+# editing user with username 
+@app.route('/admin/edit_user/<username>', methods=['GET', 'POST'])
+def admin_edit_user(username):
+    """Handles editing a user's details by the admin (using direct message variable)."""
+    message = None 
+
+    
+    if 'username' not in session or session['username'] != 'admin':
+       return redirect(url_for('login')) 
+
+    db = get_db()
+    user_to_edit = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+
+    if not user_to_edit:
+       return redirect(url_for('admin_users')) 
+    
+    if request.method == 'POST':
+        new_email = request.form.get('email')
+        new_address1 = request.form.get('address1')
+        new_address2 = request.form.get('address2')
+        new_city = request.form.get('city')
+        new_state = request.form.get('state')
+        new_zip = request.form.get('zip')
+        new_dob = request.form.get('dob')
+        new_phone = request.form.get('phone')
+
+        
+        if not all([new_email, new_address1, new_city, new_state, new_zip, new_dob, new_phone]):
+            message = "Please fill in all required fields."
+            return render_template('admin_edit_user.html', user=user_to_edit, message=message)
+
+        try:
+            
+            db.execute("""
+                UPDATE users
+                SET email = ?, address1 = ?, address2 = ?, city = ?, state = ?, zip = ?, dob = ?, phone = ?
+                WHERE username = ?
+            """, (new_email, new_address1, new_address2, new_city, new_state, new_zip, new_dob, new_phone, username))
+            db.commit()
+            
+            return redirect(url_for('admin_users')) 
+        except sqlite3.Error as e:
+            db.rollback()
+            print(f"Database error updating user {username}: {e}") 
+            
+            message = f"Database error occurred: {e}"
+        except Exception as e:
+            db.rollback()
+            print(f"An error occurred updating user {username}: {e}") 
+            
+            message = f"An error occurred: {e}"
+
+       
+        return render_template('admin_edit_user.html', user=user_to_edit, message=message)
+
+    
+    return render_template('admin_edit_user.html', user=user_to_edit, message=message) 
+
