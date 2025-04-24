@@ -1,53 +1,17 @@
 /* General Styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: #ccc;
 }
 
-/* Navbar Styling */
-.navbar {
-    width: 100%;
-    background-color: #007bff;
-    padding: 15px 0;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-}
-
-.navbar ul li {
-    display: inline;
-    margin: 0 20px;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.navbar ul li a:hover {
-    text-decoration: underline;
-}
 
 /* Container Styling */
 .container {
     width: 90%;
+    margin-top: 200px;
+    margin-left: 32%;
     max-width: 600px;
-    background: white;
     padding: 20px;
-    margin-top: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
@@ -80,7 +44,7 @@ input:focus, select:focus {
 button {
     width: 100%;
     padding: 12px;
-    background: #28a745;
+    background-color:#007bff;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -91,7 +55,7 @@ button {
 }
 
 button:hover {
-    background: #218838;
+    background-color: #0056b3;
 }
 
 /* Success & Error Messages */

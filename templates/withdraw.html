@@ -3,46 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdrawal</title>
+    <title>Withdraw</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/withdraw.css') }}">
-
-    <style>
-        button {
-            width: 100%;
-            padding: 10px;
-            background: green;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background: darkgreen;
-        }
-        .error-message {
-            color: red;
-            font-weight: bold;
-        }
-        .success-message {
-            color: green;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar">
         <ul>
-            <li><a href="{{ url_for('deposit') }}">Deposit</a></li>
-            <li><a href="#">Transfer</a></li>
             <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('deposit') }}">Deposit</a></li>
+            <li><a href="{{ url_for('transfer') }}">Transfer</a></li>
+            <li><a href="{{ url_for('withdraw') }}">Withdraw</a></li>
             <li><a href="{{ url_for('account_details') }}">Account Details</a></li>
-            <li><a href="#">Logout</a></li>
+            <li><a href="{{ url_for('index') }}">Logout</a></li>
         </ul>
     </nav>
     
     <!-- WITHDRAWAL SECTION -->
     <div class="container">
         <div class="content-box">
-            <h2>Bank Withdrawal</h2>
+            <h2>Cash Withdrawal</h2>
 
             {% if message %}
                 <p class="{{ 'success-message' if 'Successfully' in message else 'error-message' }}">
@@ -50,10 +30,7 @@
                 </p>
             {% endif %}
 
-            <form method="post" onsubmit="return validateWithdrawal()">
-                <!-- CSRF Token (Uncomment if Flask-WTF is used) -->
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">  <!-- Hidden CSRF Token -->
-
+            <form method="post">
                 <label for="account_id">Select Account:</label>
                 <select id="account_id" name="account_id" required onchange="updateBalance()">
                     <option value="" disabled selected>Select an Account</option>
@@ -63,19 +40,12 @@
                         </option>
                     {% endfor %}
                 </select> 
-
                 <p>Available Balance: <strong id="balance-display">Select an account</strong></p>
-
-                <label for="amount">Withdraw Amount:</label>
-                <input id="amount" name="amount" type="number" placeholder="Enter Amount" min="1" required>
-
-                <label for="password">Re-enter Password:</label>
+                <input id="amount" name="amount" type="number" placeholder="Enter Amount to Withdraw" min="1" required>
                 <input id="password" name="password" type="password" placeholder="Enter Password" required maxlength="20">
-
-                <button type="submit" class="withdraw-button">Withdraw</button>
+                <button type="submit">Withdraw</button>
             </form>
         </div>
-
     </div>
     <script>
         function updateBalance() {
@@ -89,25 +59,6 @@
                 balanceDisplay.textContent = "Select an account";
             }
         }
-
-        function validateWithdrawal() {
-            const selectedAccount = document.getElementById("account_id");
-            const balance = parseFloat(selectedAccount.options[selectedAccount.selectedIndex].getAttribute("data-balance"));
-            const withdrawAmount = parseFloat(document.getElementById("amount").value);
-
-            if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
-                alert("Please enter a valid withdrawal amount.");
-                return false;
-            }
-
-            if (withdrawAmount > balance) {
-                alert("Insufficient balance for this withdrawal.");
-                return false;
-            }
-            
-            return confirm("Are you sure you want to proceed with the withdrawal?");
-        }
     </script>
-
 </body>
 </html>
