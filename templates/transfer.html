@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Transfer</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/transfer.css') }}">
     </head>
     <body>
         <nav class="navbar">
@@ -18,8 +19,9 @@
             </ul>
         </nav>
         <div class="container">
+            <div class="content-box">
             <h1>Bank Account Transfer</h1>
-            <form id="transfer-form">
+            <form id="transfer-form" method="post">
                 <label for="from-account">From Account:</label>
                 <input type="text" id="from-account" name="from-account" placeholder="Enter your account number" required>
     
@@ -32,6 +34,7 @@
                 <button type="submit">Transfer</button>
                 <p id="error-message"></p>
             </form>
+            </div>
         </div>
     </body>
 </html>
