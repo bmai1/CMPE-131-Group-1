@@ -195,8 +195,39 @@ def deposit():
     return render_template('deposit.html')
 
 
-@app.route('/transfer')
+@app.route('/transfer', methods=['GET', 'POST'])
 def transfer():
+    if 'username' in session:
+        username = session['username']
+        db = get_db()
+
+        if request.method == 'POST':
+            fromaccount = request.form.get('fromaccount')
+            toaccount = request.form.get('toaccount')
+            amount = float(request.form.get('amount'))
+
+            if fromaccount != toaccount and amount > 0:
+                from_balance = db.execute(
+                    "SELECT balance FROM accounts WHERE username = ? AND accountname = ?", 
+                    (username, fromaccount)
+                ).fetchone()
+
+                to_balance = db.execute(
+                    "SELECT balance FROM accounts WHERE username = ? AND accountname = ?", 
+                    (username, toaccount)
+                ).fetchone()
+
+                if from_balance['balance'] >= amount:
+                    db.execute(
+                        "UPDATE accounts SET balance = balance - ? WHERE username = ? AND accountname = ?", 
+                        (amount, username, fromaccount)
+                    )
+                    db.execute(
+                        "UPDATE accounts SET balance = balance + ? WHERE username = ? AND accountname = ?", 
+                        (amount, username, toaccount)
+                    )
+                    db.commit()
+
     return render_template('transfer.html')
 
 @app.route('/withdraw', methods=['GET', 'POST'])

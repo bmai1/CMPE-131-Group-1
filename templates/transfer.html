@@ -5,8 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Transfer</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/deposit.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/loginregister.css') }}">
     </head>
-    <body>
+    <body style="display:block;">
         <nav class="navbar">
             <ul>
                 <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
@@ -18,19 +20,14 @@
             </ul>
         </nav>
         <div class="container">
-            <h1>Bank Account Transfer</h1>
-            <form id="transfer-form">
-                <label for="from-account">From Account:</label>
-                <input type="text" id="from-account" name="from-account" placeholder="Enter your account number" required>
-    
-                <label for="to-account">To Account:</label>
-                <input type="text" id="to-account" name="to-account" placeholder="Enter recipient's account number" required>
-    
-                <label for="amount">Amount to Transfer:</label>
+            <h1>Transfer</h1>
+            <form id="transfer-form" method="post">
+                <input type="text" id="fromaccount" name="fromaccount" placeholder="Enter origin account name" required>
+                <input type="text" id="toaccount" name="toaccount" placeholder="Enter destination account name" required>
                 <input type="number" id="amount" name="amount" placeholder="Amount to transfer" required>
-    
-                <button type="submit">Transfer</button>
-                <p id="error-message"></p>
+                <div class="buttons">
+                    <button type="submit" class="login-button">Transfer</button>
+                </div>
             </form>
         </div>
     </body>
