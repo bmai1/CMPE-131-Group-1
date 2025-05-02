@@ -212,11 +212,6 @@ def transfer():
                     (username, fromaccount)
                 ).fetchone()
 
-                to_balance = db.execute(
-                    "SELECT balance FROM accounts WHERE username = ? AND accountname = ?", 
-                    (username, toaccount)
-                ).fetchone()
-
                 if from_balance['balance'] >= amount:
                     db.execute(
                         "UPDATE accounts SET balance = balance - ? WHERE username = ? AND accountname = ?", 
@@ -229,6 +224,7 @@ def transfer():
                     db.commit()
 
     return render_template('transfer.html')
+
 
 @app.route('/withdraw', methods=['GET', 'POST'])
 def withdraw():
