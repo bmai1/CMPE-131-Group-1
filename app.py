@@ -54,8 +54,12 @@ def login():
         
         db = get_db()
         user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
-
-        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']): 
+        #admin login 
+        if username == "admin" and password == "admin":
+            session['username'] = username  
+            return redirect(url_for('admin')) 
+        #else user login
+        elif user and bcrypt.checkpw(password.encode('utf-8'), user['password']): 
             session['username'] = username
             return redirect(url_for('dashboard'))
         else:
@@ -280,3 +284,8 @@ def withdraw():
                 message = "Invalid amount. Please enter a valid number."
 
     return render_template('withdraw.html', username=username, message=message, accounts=accounts)
+
+@app.route('/admin')
+def admin():
+    """Route for admin dashboard."""    
+    return render_template('admin.html')
