@@ -5,8 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Transfer</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
+<<<<<<< HEAD
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/transfer.css') }}">
+=======
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/deposit.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/loginregister.css') }}">
+>>>>>>> 49db6566c9b82bad80c65e2638cbe5615291084d
     </head>
     <body style="display:block;">
         <nav class="navbar">
@@ -20,15 +24,29 @@
             </ul>
         </nav>
         <div class="container">
+<<<<<<< HEAD
+            <div class="content-box">
+            <h1>Bank Account Transfer</h1>
+            <form id="transfer-form" method="post">
+                <label for="from-account">From Account:</label>
+                <input type="text" id="from-account" name="from-account" placeholder="Enter your account number" required>
+    
+                <label for="to-account">To Account:</label>
+                <input type="text" id="to-account" name="to-account" placeholder="Enter recipient's account number" required>
+    
+                <label for="amount">Amount to Transfer:</label>
+=======
             <h1>Transfer</h1>
             <form id="transfer-form" method="post">
                 <input type="text" id="fromaccount" name="fromaccount" placeholder="Enter origin account name" required>
                 <input type="text" id="toaccount" name="toaccount" placeholder="Enter destination account name" required>
+>>>>>>> 49db6566c9b82bad80c65e2638cbe5615291084d
                 <input type="number" id="amount" name="amount" placeholder="Amount to transfer" required>
                 <div class="buttons">
                     <button type="submit" class="login-button">Transfer</button>
                 </div>
             </form>
+            </div>
         </div>
     </body>
 </html>
