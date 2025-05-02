@@ -54,12 +54,8 @@ def login():
         
         db = get_db()
         user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
-        #admin login 
-        if username == "admin" and password == "admin":
-            session['username'] = username  
-            return redirect(url_for('admin')) 
-        #else user login
-        elif user and bcrypt.checkpw(password.encode('utf-8'), user['password']): 
+
+        if user and bcrypt.checkpw(password.encode('utf-8'), user['password']): 
             session['username'] = username
             return redirect(url_for('dashboard'))
         else:
@@ -216,6 +212,11 @@ def transfer():
                     (username, fromaccount)
                 ).fetchone()
 
+                to_balance = db.execute(
+                    "SELECT balance FROM accounts WHERE username = ? AND accountname = ?", 
+                    (username, toaccount)
+                ).fetchone()
+
                 if from_balance['balance'] >= amount:
                     db.execute(
                         "UPDATE accounts SET balance = balance - ? WHERE username = ? AND accountname = ?", 
@@ -228,7 +229,6 @@ def transfer():
                     db.commit()
 
     return render_template('transfer.html')
-
 
 @app.route('/withdraw', methods=['GET', 'POST'])
 def withdraw():
@@ -284,8 +284,3 @@ def withdraw():
                 message = "Invalid amount. Please enter a valid number."
 
     return render_template('withdraw.html', username=username, message=message, accounts=accounts)
-
-@app.route('/admin')
-def admin():
-    """Route for admin dashboard."""    
-    return render_template('admin.html')
