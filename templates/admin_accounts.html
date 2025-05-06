@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Account Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin_accounts.css') }}">
+    </head>
+<body>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('admin') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('admin_users') }}">Users</a></li>
+            <li ><a href="{{ url_for('admin_accounts') }}">Accounts</a></li> 
+            <li><a href="#actions">Actions</a></li> {# Placeholder #}
+            <li><a href="{{ url_for('index') }}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="content-container">
+        <h2>Account Management</h2>
+
+        {% if message %}
+        <div class="message-container">
+            {# Use message_category if passed, otherwise default to error/info #}
+            <div class="message-display {{ message_category|default('info') }}">
+            {{ message }}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="content-box">
+            <h3>Open New Account</h3>
+            <form action="{{ url_for('admin_open_account') }}" method="POST">
+                <div class="form-group">
+                    <label for="username" class="form-label">Select User:</label>
+                    <select name="username" id="username" class="form-control" required>
+                        <option value="">-- Select a User --</option>
+                        {% for user in users %}
+                            <option value="{{ user.username }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="accountname" class="form-label">New Account Name:</label>
+                    <input type="text" name="accountname" id="accountname" class="form-control" placeholder="e.g., Savings, Primary Checking" required>
+                </div>
+                <div class="form-actions" style="text-align: left;">
+                    <button type="submit" class="btn btn-primary">Open Account</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="content-box">
+            <h3>Existing Accounts</h3>
+            {% if accounts %}
+                <div class="table-container">
+                    <table class="data-table"> {# Use consistent table class #}
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Account Name</th>
+                                <th>Balance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for account in accounts %}
+                                <tr>
+                                    <td>{{ account.username }}</td>
+                                    <td>{{ account.accountname }}</td>
+                                    <td>${{ "%.2f"|format(account.balance) }}</td>
+                                    <td>
+                                        {# Form for closing THIS specific account #}
+                                        <form action="{{ url_for('admin_close_account', username=account.username, accountname=account.accountname) }}"
+                                              method="POST"
+                                              style="display: inline;"
+                                              onsubmit="return confirm('Are you sure you want to close account \'{{ account.accountname }}\' for user \'{{ account.username }}\'? This cannot be undone.');">
+                                            <button type="submit" class="btn btn-danger btn-sm">Close</button> {# Use consistent button classes #}
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>No user accounts found.</p>
+            {% endif %}
+        </div>
+
+    </div></body>
+</html>
