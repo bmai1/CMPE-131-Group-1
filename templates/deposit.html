@@ -23,6 +23,9 @@
             <h2>Deposit</h2>
             <br>
             <div class="account-info">
+                {% if message %}
+                    <p>{{ message }}</p>
+                {% endif %}
                 <form method="post"> 
                     <input type="text" name="username" autocomplete="off" placeholder="Username" required>
                     <input type="text" name="accountname" autocomplete="off" placeholder="Account name" required>

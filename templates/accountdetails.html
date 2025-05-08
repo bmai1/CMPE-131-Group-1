@@ -43,14 +43,16 @@
             </div>
             <div class="col">
                 <div class="content-box">
-                    <h3>Account history</h3>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
+                    <h3>Account History</h3>
+                    {% if history %}
+                        <ul>
+                            {% for entry in history %}
+                                <li>{{ entry.datetime }} - {{ entry.description }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No history available.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
