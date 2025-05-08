@@ -73,3 +73,6 @@ body {
 .account-balance {
     font-size: 5rem; 
 }
+.txn-table   { width:100%; border-collapse:collapse; margin-top:1rem; }
+.txn-table th, .txn-table td { border:1px solid #ddd; padding:.5rem; text-align:center; }
+.txn-table th { background:#f4f4f4; }

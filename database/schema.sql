@@ -21,3 +21,11 @@ CREATE TABLE history (
     "datetime"    SMALLDATETIME NOT NULL,
     "description" VARCHAR(50) NOT NULL
 );
+CREATE TABLE IF NOT EXISTS transactions (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    username    TEXT    NOT NULL,
+    accountname TEXT    NOT NULL,
+    t_type      TEXT    NOT NULL,      -- "deposit", "withdraw", "transfer"
+    amount      REAL    NOT NULL,
+    ts          DATETIME DEFAULT CURRENT_TIMESTAMP
+);

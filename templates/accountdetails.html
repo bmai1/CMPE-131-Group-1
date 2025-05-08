@@ -41,17 +41,29 @@
                     </a>
                 </div>
             </div>
+
+            <table class="txn-table">
             <div class="col">
-                <div class="content-box">
-                    <h3>Account history</h3>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                    <p>yyyy-MM-dd HH:mm:ss - description</p>
-                </div>
+              
+  
+              <thead>
+
+                <tr><th><h3>Transaction History</h3>Date / Time</th><th>Account</th><th>Type</th><th>Amount ($)</th></tr>
+              </thead>
+              <tbody>
+                {% for t in txns %}
+                  <tr>
+                    <td>{{ t.ts }}</td>
+                    <td>{{ t.accountname }}</td>
+                    <td>{{ t.t_type }}</td>
+                    <td>{{ '{:.2f}'.format(t.amount) }}</td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="4">No transactions yet.</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            
             </div>
         </div>
     </div>
