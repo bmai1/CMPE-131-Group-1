@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User - {{ user.username }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin_edit_user.css') }}">
+
+    </head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ url_for('admin') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('admin_users') }}">Users</a></li>
+            <li ><a href="{{ url_for('admin_accounts') }}">Accounts</a></li>
+            <li><a href="#actions">Actions</a></li>
+            <li><a href="{{ url_for('index') }}">Logout</a></li>
+        </ul>
+    </nav>    
+    <div class="form-container">
+        <h2>Edit User: {{ user.username }}</h2>
+
+        {% if message %}
+          <div class="message-display error"> {{ message }}
+          </div>
+        {% endif %}
+        <form method="POST" action="{{ url_for('admin_edit_user', username=user.username) }}">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" disabled>
+                <small>Username cannot be changed.</small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+             <div class="form-group">
+                <label for="address1">Address 1:</label>
+                <input type="text" id="address1" name="address1" value="{{ user.address1 }}" required>
+            </div>
+            <div class="form-group">
+                <label for="address2">Address 2:</label>
+                <input type="text" id="address2" name="address2" value="{{ user.address2 or '' }}"> </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" value="{{ user.city }}" required>
+            </div>
+             <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" value="{{ user.state }}" required>
+            </div>
+             <div class="form-group">
+                <label for="zip">ZIP Code:</label>
+                <input type="text" id="zip" name="zip" value="{{ user.zip }}" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" value="{{ user.dob }}" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" value="{{ user.phone }}" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Save Changes</button>
+                <a href="{{ url_for('admin_users') }}">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
